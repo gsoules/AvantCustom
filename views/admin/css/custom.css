@@ -1,0 +1,89 @@
+/* Display larger thumbnail on admin/items/show.php */
+.admin-thumb {
+    width: 250px;
+}
+
+/* Hide the Collection dropdown on admin/items/edit.php */
+#collection-form {
+    display:none;
+}
+
+/* Hide the Collection panel on admin/items/show.php */
+.collection.panel {
+    display:none;
+}
+
+/* Hide the Dublin Core description that appears above the elements on admin/items/edit.php */
+#dublin-core-description.element-set-description {
+    display:none;
+}
+
+/* Hide the Dublin Core metadata description on each element on admin/items/edit.php */
+#dublin-core-metadata fieldset.set div div.inputs.five.columns.omega p.explanation {
+    display:none;
+}
+
+/* Reduce the spacing of elements on admin/items/show.php */
+.element .element-text:after {
+    margin: 8px 0;
+}
+.element-text p {
+    margin: 0 0 4px 0;
+}
+
+/* Reduce the spacing of elements on admin/items/edit.php */
+.field label {
+    margin: 0 0 2px 0;
+    min-width: 100px;
+}
+.field select {
+    margin-bottom: 2px;
+}
+.inputs {
+    margin: 0 0 12px 0;
+}
+.inputs .input-block {
+    margin: 0 0 0 0;
+}
+
+/* Hide the header on admin/items/edit.php because it shows Omeka item number */
+.items.edit h1#content-heading.section-title {
+    visibility: hidden;
+}
+
+/* Display larger thumbnail on admin/search results */
+.image img {
+    width: 120px;
+}
+
+/* Display larger thumbnail on admin/items/browse.php */
+.items.browse a.item-thumbnail {
+    width: 120px;
+}
+
+/* Reduce space below image on show.php */
+#item-images .admin-thumb {
+    margin-bottom: 0;
+}
+
+/* The user name of the person who created an item on admin/items/show.php */
+.item-owner {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+/* Hide the display of Featured on admin/items/show.php */
+.public-featured.panel p:nth-child(2) {
+    display:none;
+}
+
+#related-articles {
+    color: #C35402;
+    font-size: 16px;
+    margin-top: 24px;
+}
+
+.error {
+    color: #ff0000;
+    font-size: 18px;
+}
