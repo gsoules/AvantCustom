@@ -9,7 +9,7 @@ The AvantCustom plugin customizes Omeka's admin and public interfaces. It provid
 * Integration with the [AvantSearch](https://github.com/gsoules/AvantSearch) plugin
 * Down-for-maintenance feature
 
- At this time, the AvantCustom implementation is specific to the Southwest Harbor Public Library's [Digital Archive](http://swhplibrary.net/archive) and therefore **this plugin is not usable as-is for an Omeka installation**. However, the source code is provided here for the benefit of software developers who want to learn about the logic or adapt it for use on another project.
+ > At this time, the AvantCustom implementation is specific to the Southwest Harbor Public Library's [Digital Archive](http://swhplibrary.net/archive) and therefore **this plugin is not yet usable as-is for another Omeka installation**. However, the source code is provided here for the benefit of software developers who want to learn about the logic or adapt it for use on another project.
  
 This plugin was developed for the [Southwest Harbor Public Library](http://www.swhplibrary.org/), in Southwest Harbor, Maine. Funding was provided in part by the [John S. and James L. Knight Foundation](https://knightfoundation.org/).
 
