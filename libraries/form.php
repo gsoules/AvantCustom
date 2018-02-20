@@ -1,4 +1,3 @@
-<?php echo js_tag('vendor/tiny_mce/tiny_mce'); ?>
 <?php echo js_tag('elements'); ?>
 <?php echo js_tag('tabs'); ?>
 <?php echo js_tag('items'); ?>
