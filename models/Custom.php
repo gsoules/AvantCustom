@@ -100,16 +100,21 @@ class Custom
     public static function getZoomDataSources($identifier)
     {
         $sources = array();
+        if (empty($identifier))
+            return $sources;
+
         $dirName = self::getZoomDataDirName($identifier);
         $pathName = self::getZoomDataPath($identifier) . $identifier . '/';
 
         $xmlFileName = $dirName . DIRECTORY_SEPARATOR . 'ImageProperties.xml';
         if (file_exists($xmlFileName))
         {
+            // There is a single folder of tiles for one image.
             $sources[] = self::getZoomDataProperties($dirName, $pathName);
         }
         else
         {
+            // There is a folder of folders of tiles containing multiple images for a single item.
             $dirs = glob($dirName . DIRECTORY_SEPARATOR . '*');
 
             foreach ($dirs as $dirName)
