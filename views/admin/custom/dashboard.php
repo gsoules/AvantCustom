@@ -1,8 +1,8 @@
 <?php
 $pageTitle = __('Custom Dashboard');
-echo head(array('bodyclass'=>'index primary-secondary', 'title'=>$pageTitle)); ?>
+echo head(array('bodyclass'=>'index primary-secondary', 'title'=>$pageTitle));
 
-<?php
+$identifierParts = ItemView::getPartsForIdentifierElement();
 $total_items = total_records('Item');
 $total_tags = total_records('Tag');
 $stats = array(
@@ -42,7 +42,7 @@ set_loop_records('items', $modifiedItems);
 foreach (loop('items') as $modifiedItems):
     ?>
     <div class="recent-row">
-        <p class="recent"><?php echo link_to_item() . ' (Item ' . metadata($modifiedItems, array('Dublin Core', 'Identifier'), array('no_filter' => true)) . ')'; ?></p>
+        <p class="recent"><?php echo link_to_item() . ' (Item ' . metadata($modifiedItems, array($identifierParts[0], $identifierParts[1]), array('no_filter' => true)) . ')'; ?></p>
         <?php if (is_allowed($modifiedItems, 'edit')): ?>
             <p class="dash-edit"><?php echo link_to_item(__('Edit'), array(), 'edit'); ?></p>
         <?php endif; ?>
@@ -58,7 +58,7 @@ set_loop_records('items', get_recent_items(100));
 foreach (loop('items') as $item):
     $user = $db->getTable('User')->find($item->owner_id);
     $userName = $user ? $user->username : 'unknown';
-    $identifier = metadata($item, array('Dublin Core', 'Identifier'), array('no_filter' => true));
+    $identifier = ItemView::getItemIdentifier($item);
     ?>
     <div class="recent-row">
         <p class="recent"><?php echo link_to_item() . ' (' . $identifier . ') ' . $userName; ?></p>

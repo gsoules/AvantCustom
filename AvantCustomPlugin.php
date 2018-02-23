@@ -153,7 +153,9 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
         {
             $itemSubject = metadata($item, array('Dublin Core', 'Subject'), array('no_filter' => true));
             $subjectParts = explode(',', $itemSubject);
-            $subject = '-' . strtolower(trim($subjectParts[0]));
+            $subject = strtolower(trim($subjectParts[0]));
+            if (!empty($subject))
+                $subject = '-' . $subject;
         }
 
         $name = "fallback-{$type}{$subject}.png";
@@ -170,7 +172,7 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
     public function filterItemCitation($citation, $args)
     {
         $item = $args['item'];
-        $identifier = metadata($item, array('Dublin Core', 'Identifier'), array('no_filter' => true));
+        $identifier = ItemView::getItemIdentifier($item);
         $citation .= "<span class='citation-identifier'>Item $identifier</span>";
         return $citation;
     }
@@ -275,6 +277,7 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
     {
         set_option('custom_tab_name', $_POST['custom_tab_name']);
         set_option('custom_maintenance', (int)(boolean)$_POST['custom_maintenance']);
+        set_option('custom_elements_display_order', $_POST['custom_elements_display_order']);
     }
 
     public function hookConfigForm()
