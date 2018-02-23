@@ -20,3 +20,14 @@
     </div>
 </div>
 
+<div class="field">
+    <div class="two columns alpha">
+        <label for="custom_elements_display_order"><?php echo __('Display Order'); ?></label>
+    </div>
+    <div class="inputs five columns omega">
+        <p class="explanation"><?php echo __("Provide a comma-separated list of element names in the order they should appear on the public Show page"); ?></p>
+        <?php echo $view->formTextarea('custom_elements_display_order', get_option('custom_elements_display_order')); ?>
+    </div>
+</div>
+
+
