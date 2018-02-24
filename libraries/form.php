@@ -1,6 +1,29 @@
-<?php echo js_tag('elements'); ?>
-<?php echo js_tag('tabs'); ?>
-<?php echo js_tag('items'); ?>
+<?php
+
+try
+{
+    $item = get_current_record('item');
+}
+catch (Omeka_View_Exception $e)
+{
+    // This exception handler circumvents an Omeka anomaly where it incorrectly calls AvantCustom's
+    // libraries\form.php file (this file) when attempting to display the form used to edit item types.
+    // When the wrong form is called, an exception occurs. The best we can do it trap it to avoid an
+    // error, but we don't know any way to get Omeka to call the correct form which is probably
+    // admin\themes\default\item-types\form.php
+    echo '<h4 style="color:red;">You must temporarily deactivate the AvantCustom plugin before editing an Item Type.</h4>';
+    echo 'DO NOT click any buttons below.<br/><br/>';
+    echo 'Deactivate the AvantCustom plugin now and then return to the Item Type editor.<br/>';
+    echo 'When you are finished editing the Item Type, don\'t forget to reactivate AvantCustom.<br/><br/>';
+    echo 'This inconvenience is caused by an Omeka bug that creates an incompatibility with the plugin.<br/><br/>';
+    return;
+}
+
+echo js_tag('elements');
+echo js_tag('tabs');
+echo js_tag('items');
+?>
+
 <script type="text/javascript" charset="utf-8">
 //<![CDATA[
 // TinyMCE hates document.ready.
