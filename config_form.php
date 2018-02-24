@@ -12,11 +12,12 @@
 
 <div class="field">
     <div class="two columns alpha">
-        <label for="custom_tab_name"><?php echo __('Tab name'); ?></label>
+        <label for="custom_item_type_name"><?php echo __('Item Type Name'); ?></label>
     </div>
     <div class="inputs five columns omega">
-        <p class="explanation"><?php echo __("Custom name for 'Item Type Metadata' tab on Edit Item page"); ?></p>
-        <?php echo $view->formText('custom_tab_name', get_option('custom_tab_name')); ?>
+        <p class="explanation"><?php echo __("Specify the exact name of the custom Item Type used by this installation.
+         The custom item type provides elements, in addition to Dublin Core, that are unique to this installation."); ?></p>
+        <?php echo $view->formText('custom_item_type_name', get_option('custom_item_type_name')); ?>
     </div>
 </div>
 

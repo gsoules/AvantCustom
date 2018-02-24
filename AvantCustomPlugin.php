@@ -8,6 +8,7 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
         'admin_items_panel_buttons',
         'admin_items_show',
         'admin_items_show_sidebar',
+        'before_save_item',
         'config',
         'config_form',
         'define_routes',
@@ -94,7 +95,7 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
         $newTabs = array();
         foreach ($tabs as $key => $tab) {
             if ($key == 'Item Type Metadata') {
-                $tabName = get_option('custom_tab_name');
+                $tabName = get_option('custom_item_type_name');
                 if (!$tabName)
                     $tabName = $key;
             }
@@ -273,9 +274,15 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
         $this->showItemHistory($args['item']);
     }
 
+    public function hookBeforeSaveItem($args)
+    {
+        $item = $args['record'];
+        self::setItemType($item);
+    }
+
     public function hookConfig()
     {
-        set_option('custom_tab_name', $_POST['custom_tab_name']);
+        set_option('custom_item_type_name', $_POST['custom_item_type_name']);
         set_option('custom_maintenance', (int)(boolean)$_POST['custom_maintenance']);
         set_option('custom_elements_display_order', $_POST['custom_elements_display_order']);
     }
@@ -340,6 +347,16 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
 
         // Abandon the search request and redirect to the 'show' page.
         $this->getRedirector()->gotoUrl(WEB_ROOT . $url);
+    }
+
+    protected function setItemType($item)
+    {
+        if (!empty($item['item_type_id']))
+            return;
+
+        // Explicitly set the item_type_id for a newly added item. Normally in Omeka the admin
+        // chooses the item type from a dropdown list, but AvantCustom hides that list.
+        $item['item_type_id'] = Custom::getCustomItemTypeId();;
     }
 
     public function shortcode($args, $view)
