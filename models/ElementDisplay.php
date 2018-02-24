@@ -4,7 +4,7 @@ class ElementDisplay
 {
     public function orderElementsForDisplay($elementSetsForDisplay)
     {
-        // Get the display order form the configuration options.
+        // Get the display order for the configuration options.
         $displayOrderNames = get_option('custom_elements_display_order');
         $names = explode(',', $displayOrderNames);
 
