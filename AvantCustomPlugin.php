@@ -32,7 +32,7 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
     protected function createCustomRelationshipsFor($item, RelatedItemsTree $tree, $elementName, $groupName)
     {
         $elementId = ElementFinder::getElementIdForElementName($elementName);
-        $title = ItemView::getItemTitle($item);
+        $title = ItemView::getItemTitle($item, false);
         $label = $groupName;
 
         $results = ElementFinder::getItemsWithElementValue($elementId, $title);
@@ -42,6 +42,8 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
 
         $customRelationshipsNode = new RelatedItemsTreeNode(0, $label);
 
+        // Form a URL for a search that will find all the related items. The URL is
+        // emitted in the "See all n items" link that appears following a short list of items.
         $url = ElementFinder::getAdvancedSearchUrl($elementId, $title);
         $imageViewId = SearchResultsViewFactory::IMAGE_VIEW_ID;
         $url .= "&view=$imageViewId";
