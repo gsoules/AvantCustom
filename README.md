@@ -3,6 +3,8 @@
 The AvantCustom plugin customizes Omeka's admin and public interfaces. It provides:
 
 * Control of element display order and mixing of Dublin Core and non Dublin Core elements on public pages
+* Eliminates Item Type dropdown list in favor of a single admin-chosen Item Type which is used for all items.
+* Hides 'Collection' in the admin left menu panel.
 * Customizations to the Omeka admin interface
 * Researcher access to non-public items using the public interface
 * Lightbox feature (using [Magnific Popup](https://github.com/dimsemenov/Magnific-Popup/))
