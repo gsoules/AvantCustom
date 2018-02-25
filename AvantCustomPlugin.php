@@ -20,7 +20,6 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
     protected $_filters = array(
         'admin_items_form_tabs',
         'admin_navigation_main',
-        'custom_relationships',
         'fallback_image_name',
         'file_markup',
         'item_citation',
@@ -28,55 +27,6 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
         'item_thumbnail_class',
         'item_thumbnail_header'
     );
-
-    protected function createCustomRelationshipsFor($item, RelatedItemsTree $tree, $elementName, $groupName)
-    {
-        $elementId = ElementFinder::getElementIdForElementName($elementName);
-        $title = ItemView::getItemTitle($item, false);
-        $label = $groupName;
-
-        $results = ElementFinder::getItemsWithElementValue($elementId, $title);
-
-        if (empty($results))
-            return null;
-
-        $customRelationshipsNode = new RelatedItemsTreeNode(0, $label);
-
-        // Form a URL for a search that will find all the related items. The URL is
-        // emitted in the "See all n items" link that appears following a short list of items.
-        $url = ElementFinder::getAdvancedSearchUrl($elementId, $title);
-        $imageViewId = SearchResultsViewFactory::IMAGE_VIEW_ID;
-        $url .= "&view=$imageViewId";
-        $customRelationshipsNode->setData($url);
-
-        foreach ($results as $result)
-        {
-            $itemId = $result['id'];
-            if (RelatedItemsTree::containsItem($itemId, $tree->getRootNode()))
-            {
-                // This item is part of another relationship so don't emit it again.
-                // If it's the only custom item, then don't emit the custom tree.
-                if (count($results) == 1)
-                    return null;
-                else
-                    continue;
-            }
-            $item = ItemView::getItemFromId($itemId);
-            if (empty($item))
-            {
-                // The user does not have access to the target item e.g. because it's private.
-                continue;
-            }
-            $itemTitle = ItemView::getItemTitle($item);
-            $relatedItem = new RelatedItem($itemId);
-            $relatedItem->setItem($item);
-            $relatedItem->setLabels($label);
-            $kid = new RelatedItemsTreeNode($itemId, $itemTitle, $relatedItem);
-            $customRelationshipsNode->addKid($kid);
-        }
-
-        return $customRelationshipsNode;
-    }
 
     protected function emitLightboxLink($item, $identifier, $useCoverImage)
     {
@@ -117,22 +67,6 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
             unset($nav[$key]);
 
         return $nav;
-    }
-
-    public function filterCustomRelationships($nodes, $args)
-    {
-        $item = $args['item'];
-        $tree = $args['tree'];
-
-        $node = $this->createCustomRelationshipsFor($item, $tree, 'Creator', 'Created');
-        if (!empty($node))
-            $nodes[] = $node;
-
-        $node = $this->createCustomRelationshipsFor($item, $tree, 'Publisher', 'Published');
-        if (!empty($node))
-            $nodes[] = $node;
-
-        return $nodes;
     }
 
     public function filterFallbackImageName($name, $args)
