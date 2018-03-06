@@ -19,41 +19,18 @@ catch (Omeka_View_Exception $e)
     return;
 }
 
+// The release of Omeka 2.6 broke code using TinyMCE. Now we have to choose which version to use.
+$tinymce3 = version_compare(OMEKA_VERSION, '2.6', '<');
+
+echo js_tag($tinymce3 ? 'vendor/tiny_mce/tiny_mce' : 'vendor/tinymce/tinymce.min');
 echo js_tag('elements');
 echo js_tag('tabs');
 echo js_tag('items');
+
+// Insert the Javascript for the Tiny MCE editor. The code comes from admin/themes/default/items/forms.php which is
+// an Omeka core file. If that code changes in a future Omeka release, update tinymce4-script.php to match.
+echo $this->partial($tinymce3 ? '/tinymce3-script.php' : '/tinymce4-script.php');
 ?>
-
-<script type="text/javascript" charset="utf-8">
-//<![CDATA[
-// TinyMCE hates document.ready.
-jQuery(window).load(function () {
-    Omeka.Tabs.initialize();
-
-    Omeka.Items.tagDelimiter = <?php echo js_escape(get_option('tag_delimiter')); ?>;
-    Omeka.Items.enableTagRemoval();
-    Omeka.Items.makeFileWindow();
-    Omeka.Items.enableSorting();
-    Omeka.Items.tagChoices('#tags', <?php echo js_escape(url(array('controller'=>'tags', 'action'=>'autocomplete'), 'default', array(), true)); ?>);
-
-    Omeka.wysiwyg({
-        mode: "none",
-        forced_root_block: ""
-    });
-
-    // Must run the element form scripts AFTER reseting textarea ids.
-    jQuery(document).trigger('omeka:elementformload');
-
-    Omeka.Items.enableAddFiles(<?php echo js_escape(__('Add Another File')); ?>);
-    Omeka.Items.changeItemType(<?php echo js_escape(url("items/change-type")) ?><?php if ($id = metadata('item', 'id')) echo ', '.$id; ?>);
-});
-
-jQuery(document).bind('omeka:elementformload', function (event) {
-    Omeka.Elements.makeElementControls(event.target, <?php echo js_escape(url('elements/element-form')); ?>,'Item'<?php if ($id = metadata('item', 'id')) echo ', '.$id; ?>);
-    Omeka.Elements.enableWysiwyg(event.target);
-});
-//]]>
-</script>
 
 <section class="seven columns alpha" id="edit-form">
 
