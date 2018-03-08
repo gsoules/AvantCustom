@@ -2,18 +2,6 @@
 
 class Custom
 {
-    public static function emitSearchForm()
-    {
-        $url = url('find');
-
-        $form =
-            '<form id="search-form" name="search-form" action="' . $url. '" method="get">
-            <input type="text" name="query" id="query" value="" title="Search">
-            <button id="submit_search" type="submit" value="Search">Search</button></form>';
-
-        echo $form;
-    }
-
     public static function emitZoomScript($identifier, $zoomDataProperties)
     {
         $zoomDataPath = Custom::getZoomDataPath($identifier);
