@@ -23,11 +23,17 @@ class Custom
         $tileSourceCount = count($zoomDataProperties);
         if ($tileSourceCount >= 2)
         {
-            $rows = 1;
-            if ($tileSourceCount >= 4)
-                $rows = 2;
-            if ($tileSourceCount > 8)
+            if ($tileSourceCount > 24)
+                $rows = $tileSourceCount / 7;
+            else if ($tileSourceCount > 16)
+                $rows = 4;
+            else if ($tileSourceCount > 8)
                 $rows = 3;
+            else if ($tileSourceCount > 4)
+                $rows = 2;
+            else
+                $rows = 1;
+
             $collectionOption .= 'sequenceMode: false,' . PHP_EOL;
             $collectionOption .= 'collectionMode: true,' . PHP_EOL;
             $collectionOption .= 'collectionRows: ' . $rows . ',' . PHP_EOL;
