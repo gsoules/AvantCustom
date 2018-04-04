@@ -35,7 +35,7 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
         if (!empty($url))
         {
             $title = __('Item ') . $identifier . ' - ' . ItemView::getItemTitle($item);
-            $html = "<a class='lightbox' href='$url' title='$title'></a>";
+            $html = "<a class='lightbox lightbox-icon' href='$url' title='$title'></a>";
         }
         return $html;
     }
@@ -109,8 +109,9 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
     public function filterItemCitation($citation, $args)
     {
         $item = $args['item'];
-        $identifier = ItemView::getItemIdentifier($item);
-        $citation .= "<span class='citation-identifier'>Item $identifier</span>";
+        $prefix = ItemView::getIdentifierPrefix();
+        $identifier = ItemView::getItemIdentifierAlias($item);
+        $citation .= "<span class='citation-identifier'>{$prefix}{$identifier}</span>";
         return $citation;
     }
 
@@ -131,12 +132,13 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
     {
         $item = $args['item'];
         $useCoverImage = $args['use_cover_image'];
-        $identifier = ItemView::getItemIdentifier($item);
+        $identifier = ItemView::getItemIdentifierAlias($item);
+        $prefx = ItemView::getIdentifierPrefix();
         if ($item->public == 0)
            $identifier .= '*';
         $html = '<div class="item-preview-header">';
         $html .= $this->emitLightboxLink($item, $identifier, $useCoverImage);
-        $html .= "<span class=\"related-item-identifier\">Item $identifier</span>";
+        $html .= "<span class=\"related-item-identifier\">{$prefx}{$identifier}</span>";
         $html .= '</div>';
         return $html;
     }
