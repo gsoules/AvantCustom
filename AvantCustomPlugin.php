@@ -28,18 +28,6 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
         'item_thumbnail_header'
     );
 
-    protected function emitLightboxLink($item, $identifier, $useCoverImage)
-    {
-        $html = '';
-        $url = ItemView::getImageUrl($item, $useCoverImage);
-        if (!empty($url))
-        {
-            $title = __('Item ') . $identifier . ' - ' . ItemView::getItemTitle($item);
-            $html = "<a class='lightbox lightbox-icon' href='$url' title='$title'></a>";
-        }
-        return $html;
-    }
-
     public function filterAdminItemsFormTabs($tabs, $args)
     {
         // Display a custom name for the "Item Type Metadata' tab on the admin/edit page.
@@ -137,7 +125,6 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
         if ($item->public == 0)
            $identifier .= '*';
         $html = '<div class="item-preview-header">';
-        $html .= $this->emitLightboxLink($item, $identifier, $useCoverImage);
         $html .= "<span class=\"related-item-identifier\">{$prefx}{$identifier}</span>";
         $html .= '</div>';
         return $html;
