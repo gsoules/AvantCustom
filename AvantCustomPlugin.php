@@ -119,13 +119,15 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
     public function filterItemThumbnailHeader($html, $args)
     {
         $item = $args['item'];
-        $useCoverImage = $args['use_cover_image'];
         $identifier = ItemView::getItemIdentifierAlias($item);
         $prefx = ItemView::getIdentifierPrefix();
         if ($item->public == 0)
            $identifier .= '*';
+
+        $url = url("items/show/{$item->id}");
+
         $html = '<div class="item-preview-header">';
-        $html .= "<span class=\"related-item-identifier\">{$prefx}{$identifier}</span>";
+        $html .= "<a class='item-preview-identifier' href=\"$url\">{$prefx}{$identifier}</a>";
         $html .= '</div>';
         return $html;
     }
