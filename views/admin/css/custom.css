@@ -1,6 +1,31 @@
 /* Display larger thumbnail on admin/items/show.php */
+.admin-thumb:first-child {
+    width: 264px;
+    height: 100%;
+}
+
 .admin-thumb {
-    width: 250px;
+    width: 60px;
+    height: 80px;
+}
+
+.admin-thumb.panel {
+    border-top: 0;
+    padding: 4px 4px 4px 4px;
+    background-color: transparent;
+}
+
+.admin-thumb.panel img {
+    padding-bottom: 0;
+}
+
+#item-images .admin-thumb {
+    margin: 0 8px 8px 0;
+}
+
+#item-images .admin-thumb:nth-of-type(4) {
+    /* Override Omeka styling of the 4th thumb */
+    margin: 0 8px 8px 0;
 }
 
 /* Hide the Collection dropdown on admin/items/edit.php */
@@ -59,11 +84,6 @@
 /* Display larger thumbnail on admin/items/browse.php */
 .items.browse a.item-thumbnail {
     width: 120px;
-}
-
-/* Reduce space below image on show.php */
-#item-images .admin-thumb {
-    margin-bottom: 0;
 }
 
 /* The user name of the person who created an item on admin/items/show.php */
