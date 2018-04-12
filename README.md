@@ -2,14 +2,11 @@
 
 The AvantCustom plugin customizes Omeka's admin and public interfaces. It provides:
 
-* Control of element display order and mixing of Dublin Core and non Dublin Core elements on public pages
 * Eliminates Item Type dropdown list in favor of a single admin-chosen Item Type which is used for all items.
 * Hides 'Collection' in the admin left menu panel.
-* Customizations to the Omeka admin interface
+* Customizations to the Omeka admin interface e.g. showing colored lines based on item type.
+* Custom fallback images based on type.
 * Researcher access to non-public items using the public interface
-* Lightbox feature (using [Magnific Popup](https://github.com/dimsemenov/Magnific-Popup/))
-* [Zoomable images](http://swhplibrary.net/digitalarchive/find?tags=zoomable&view=4) (using [OpenSeadragon](https://openseadragon.github.io/))
-* Integration with the [AvantSearch](https://github.com/gsoules/AvantSearch) plugin
 * Down-for-maintenance feature
 
  > At this time, the AvantCustom implementation is specific to the Southwest Harbor Public Library's [Digital Archive](http://swhplibrary.net/archive) and therefore **this plugin is not yet usable as-is for another Omeka installation**. However, the source code is provided here for the benefit of software developers who want to learn about the logic or adapt it for use on another project.
