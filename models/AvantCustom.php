@@ -36,8 +36,8 @@ class AvantCustom
     public static function getItemCitation($citation, $args)
     {
         $item = $args['item'];
-        $prefix = ItemView::getIdentifierPrefix();
-        $identifier = ItemView::getItemIdentifierAlias($item);
+        $prefix = ItemMetadata::getIdentifierPrefix();
+        $identifier = ItemMetadata::getItemIdentifierAlias($item);
         $citation .= "<span class='citation-identifier'>{$prefix}{$identifier}</span>";
         return $citation;
     }
@@ -58,8 +58,8 @@ class AvantCustom
     public static function getItemThumbnailHeader($html, $args)
     {
         $item = $args['item'];
-        $identifier = ItemView::getItemIdentifierAlias($item);
-        $prefx = ItemView::getIdentifierPrefix();
+        $identifier = ItemMetadata::getItemIdentifierAlias($item);
+        $prefx = ItemMetadata::getIdentifierPrefix();
         if ($item->public == 0)
             $identifier .= '*';
 
