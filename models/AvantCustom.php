@@ -2,50 +2,50 @@
 
 class AvantCustom
 {
-    public static function getFallbackImageName($name, $args)
+    public static function getFallbackImageName($name, $item)
     {
-        $item = $args['item'];
+        // Construct a file name from the item's base type and base subject.
 
-        if (is_admin_theme() || $item == null)
-            return $name;
-
-        $itemType = metadata($item, array('Dublin Core', 'Type'), array('no_filter' => true));
+        $itemType = ItemMetadata::getElementMetadata($item, array('Dublin Core', 'Type'));
         if (empty($itemType))
             return $name;
 
         $typeParts = explode(',', $itemType);
-        $type = strtolower(trim($typeParts[0]));
+        $baseType = strtolower(trim($typeParts[0]));
 
         // Use the subject only with articles, otherwise there are too many possible file names.
         // This should suffice since most placeholders are for articles.
-        $subject = '';
-        if ($type == 'article')
+        $baseSubject = '';
+        if ($baseType == 'article')
         {
-            $itemSubject = metadata($item, array('Dublin Core', 'Subject'), array('no_filter' => true));
+            $itemSubject = ItemMetadata::getElementMetadata($item, array('Dublin Core', 'Subject'));
             $subjectParts = explode(',', $itemSubject);
-            $subject = strtolower(trim($subjectParts[0]));
-            if (!empty($subject))
-                $subject = '-' . $subject;
+            $baseSubject = strtolower(trim($subjectParts[0]));
+            if (!empty($baseSubject))
+                $baseSubject = '-' . $baseSubject;
         }
 
-        $name = "fallback-{$type}{$subject}.png";
-
+        $name = "fallback-{$baseType}{$baseSubject}.png";
         return $name;
     }
 
-    public static function getItemCitation($citation, $args)
+    public static function getItemCitation($citation, $item)
     {
-        $item = $args['item'];
+        // Append the item's Identifier to the end of the citation.
+
         $prefix = ItemMetadata::getIdentifierPrefix();
         $identifier = ItemMetadata::getItemIdentifierAlias($item);
         $citation .= "<span class='citation-identifier'>{$prefix}{$identifier}</span>";
         return $citation;
     }
 
-    public static function getItemThumbnailClass($class, $args)
+    public static function getItemThumbnailClass($class, $item)
     {
-        $item = $args['item'];
-        $itemType = metadata($item, array('Dublin Core', 'Type'), array('no_filter' => true));
+        // Append the item's base type to it's thumbnail class. For example, if the base type
+        // is 'Document, Diary' it appends 'Document'. The type portion of the class is used to
+        // provide styling for the item preview thumbnail, e.g. a colored line above the image.
+
+        $itemType = ItemMetadata::getElementMetadata($item, array('Dublin Core', 'Type'));
         if ($itemType)
         {
             // Get the base type and use it for this item's class.
@@ -53,21 +53,5 @@ class AvantCustom
             $class .= ' ' . strtolower(trim($parts[0]));
         }
         return $class;
-    }
-
-    public static function getItemThumbnailHeader($html, $args)
-    {
-        $item = $args['item'];
-        $identifier = ItemMetadata::getItemIdentifierAlias($item);
-        $prefx = ItemMetadata::getIdentifierPrefix();
-        if ($item->public == 0)
-            $identifier .= '*';
-
-        $url = url("items/show/{$item->id}");
-
-        $html = '<div class="item-preview-header">';
-        $html .= "<a class='item-preview-identifier' href=\"$url\">{$prefx}{$identifier}</a>";
-        $html .= '</div>';
-        return $html;
     }
 }
