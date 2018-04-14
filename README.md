@@ -2,12 +2,11 @@
 
 The AvantCustom plugin provides a way for an administrator/developer to add custom logic to their Omeka installation
 without having to create a plugin from scratch. A plugin can provide new functionality, or modify existing functionality,
-in ways that are not possible solely by modifying a theme.
+in ways that are not possible by modifying a theme.
 
-By default, AvantCustom comes with the following custom code:
+**This plugin is intended for use by developers who are familiar with Omeka plugins and understand how filters and hooks
+are used to add or modify Omeka features.**
 
-* Customizations to the Omeka admin interface e.g. showing colored lines based on item type.
-* Custom fallback images based on type.
 
 ## Dependencies
 The AvantCustom plugin requires that the [AvantCommon](https://github.com/gsoules/AvantCommon) plugin be installed and activated.
@@ -20,6 +19,10 @@ To install the AvantCustom plugin, follow these steps:
 1. Unzip the AvantCustom-master file into your Omeka installation's plugin directory.
 1. Rename the folder to AvantCustom.
 1. Activate the plugin from the Admin → Settings → Plugins page.
+
+## Warning
+
+Use it at your own risk.
 
 ##  License
 
