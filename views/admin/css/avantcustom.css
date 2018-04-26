@@ -1,0 +1,36 @@
+/* The error that appears at the top of admin pages. The style must be here
+   instead of in the theme because this styling overrides the admin theme. */
+.error {
+    color: #ff0000;
+    font-size: 18px;
+}
+
+/*
+These styles override the default width of 300px that the SimpleVocab plugin uses for <select> lists.
+The element numbers correspond to the internal Omeka Ids for each element. If you want to use this CSS
+for a different Omeka installation, you may have to modify the Id values.
+*/
+/* Country element <select> width */
+#Elements-58-0-text {
+    width: 110px !important;
+}
+/* State element <select> width */
+#Elements-59-0-text {
+    width: 110px !important;
+}
+/* Status element <select> width */
+#Elements-68-0-text {
+    width: 110px !important;
+}
+/* Restrictions element <select> width */
+#Elements-72-0-text {
+    width: 140px !important;
+}
+/* Access DB element <select> width */
+#Elements-74-0-text {
+    width: 110px !important;
+}
+/* Secondary element <select> width */
+#Elements-76-0-text {
+    width: 110px !important;
+}
