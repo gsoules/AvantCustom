@@ -7,6 +7,11 @@ class SwhplElements
         return self::getNextIdentifier();
     }
 
+    public static function getDefaultStatus(Item $item)
+    {
+        return 'OK';
+    }
+
     protected static function getNextIdentifier()
     {
         $identifierElementId = ItemMetadata::getIdentifierElementId();
@@ -15,6 +20,11 @@ class SwhplElements
         $result = $db->query($sql)->fetch();
         $id = $result['next_element_id'] + 1;
         return $id;
+    }
+
+    public static function saveItem($item)
+    {
+        return;
     }
 
     public static function validateAccessDB($item, $accessDBValue)
@@ -71,34 +81,6 @@ class SwhplElements
             }
         }
         return true;
-    }
-
-    public static function validateItem(Item $item)
-    {
-        $identifierElementId = ItemMetadata::getIdentifierElementId();
-        $identifierText = AvantCommon::getPostTextForElementId($identifierElementId);
-
-        if (empty($identifierText))
-        {
-            $id = ItemMetadata::getItemIdentifier($item);
-
-            if (empty($id))
-            {
-                // The item does not exist.
-                $id = self::getNextIdentifier();
-                $message = 'Blank replaced with next available identifier.';
-            }
-            else
-            {
-                // The item already exits, but the user must have erased the Identifier field.
-                $message = 'Blank replaced with original identifier.';
-            }
-
-            AvantCommon::setPostTextForElementId($identifierElementId, $id);
-            AvantElements::addError($item, ItemMetadata::getIdentifierElementName(), $message);
-        }
-
-        return;
     }
 
     public static function validateLocation($item, $elementId, $elementName, $text)
