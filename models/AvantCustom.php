@@ -6,7 +6,7 @@ class AvantCustom
     {
         // Construct a file name from the item's base type and base subject.
 
-        $itemType = ItemMetadata::getElementTextFromElementName($item, array('Dublin Core', 'Type'));
+        $itemType = ItemMetadata::getElementTextForElementName($item, 'Type');
         if (empty($itemType))
             return $name;
 
@@ -18,7 +18,7 @@ class AvantCustom
         $baseSubject = '';
         if ($baseType == 'article')
         {
-            $itemSubject = ItemMetadata::getElementTextFromElementName($item, array('Dublin Core', 'Subject'));
+            $itemSubject = ItemMetadata::getElementTextForElementName($item, 'Subject');
             $subjectParts = explode(',', $itemSubject);
             $baseSubject = strtolower(trim($subjectParts[0]));
             if (!empty($baseSubject))
@@ -45,7 +45,7 @@ class AvantCustom
         // is 'Document, Diary' it appends 'Document'. The type portion of the class is used to
         // provide styling for the item preview thumbnail, e.g. a colored line above the image.
 
-        $itemType = ItemMetadata::getElementTextFromElementName($item, array('Dublin Core', 'Type'));
+        $itemType = ItemMetadata::getElementTextForElementName($item, 'Type');
         if ($itemType)
         {
             // Get the base type and use it for this item's class.

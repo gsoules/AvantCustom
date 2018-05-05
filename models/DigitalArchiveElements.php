@@ -24,7 +24,7 @@ class DigitalArchiveElements
                     // Ignore the item we are comparing against.
                     continue;
                 }
-                $duplicateType = ItemMetadata::getElementTextFromElementName($duplicateItem, array('Dublin Core', 'Type'));
+                $duplicateType = ItemMetadata::getElementTextForElementName($duplicateItem, 'Type');
                 $duplicateIsArticle = strpos($duplicateType, "Article,") === 0;
                 if ($duplicateIsArticle)
                 {
