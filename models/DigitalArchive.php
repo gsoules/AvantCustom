@@ -69,7 +69,7 @@ class DigitalArchive
         return $year;
     }
 
-    public static function validateTitle($item, $elementId, $elementName, $text)
+    public static function validateTitle($item, $elementId, $text)
     {
         if (substr($text, 0, 1) == "'")
         {
@@ -96,6 +96,7 @@ class DigitalArchive
                 $duplicateIsArticle = strpos($duplicateType, "Article,") === 0;
                 if ($duplicateIsArticle)
                 {
+                    $elementName = ItemMetadata::getElementNameFromId($elementId);
                     AvantElements::addError($item, $elementName, "Another article exists with the same title as this article.");
                     return;
                 }
