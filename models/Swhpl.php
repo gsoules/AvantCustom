@@ -1,6 +1,6 @@
 <?php
 
-class SwhplElements
+class Swhpl
 {
     public static function filterDate($item, $elementId, $text)
     {
@@ -72,7 +72,7 @@ class SwhplElements
         }
     }
 
-    public static function validateIdentifier($item, $elementId, $elementName, $text)
+    public static function validateIdentifier($item, $elementId, $text)
     {
         // Make sure the value is an integer.
         if (!ctype_digit($text))
@@ -92,13 +92,14 @@ class SwhplElements
             if ($savedItem->id != $foundItem->id)
             {
                 $nextElementId = self::getNextIdentifier();
+                $elementName = ItemMetadata::getElementNameFromId($elementId);
                 AvantElements::addError($item, $elementName, "$text is used by another item. Next available Identifier is $nextElementId.");
             }
         }
         return true;
     }
 
-    public static function validateLocation($item, $elementId, $elementName, $text)
+    public static function validateLocation($item, $elementId, $text)
     {
         // Make sure Country has a value if Location has a value.
         if (!empty(AvantCommon::getPostTextForElementName('Location')))
@@ -110,7 +111,7 @@ class SwhplElements
         }
     }
 
-    public static function validateStatus($item, $elementId, $elementName, $text)
+    public static function validateStatus($item, $elementId, $text)
     {
         // Get the values of the Access DB and Status elements.
         $accessDBValue = AvantCommon::getPostTextForElementName('Access DB');
