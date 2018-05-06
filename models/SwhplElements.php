@@ -2,6 +2,21 @@
 
 class SwhplElements
 {
+    public static function filterDate($item, $elementId, $text)
+    {
+        $formattedDate = $text;
+        $length = strlen($text);
+        if ($length == 10)
+        {
+            $formattedDate = date("F j, Y", strtotime($text));
+        }
+        elseif ($length == 7)
+        {
+            $formattedDate = date("F Y", strtotime($text));
+        }
+        return $formattedDate;
+    }
+
     public static function getDefaultIdentifier(Item $item)
     {
         return self::getNextIdentifier();
