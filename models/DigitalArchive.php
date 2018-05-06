@@ -1,6 +1,45 @@
 <?php
 class DigitalArchive
 {
+    public static function filterRights($item, $elementId, $text)
+    {
+        $class = 'metadata-rights-link';
+        $href = $text;
+
+        switch ($href)
+        {
+            case 'http://rightsstatements.org/vocab/InC/1.0/':
+                $linkText = __('In Copyright');
+                break;
+            case 'http://rightsstatements.org/vocab/InC-EDU/1.0/':
+                $linkText = __('In Copyright - Educational Use Permitted');
+                break;
+            case 'http://rightsstatements.org/vocab/InC-NC/1.0/':
+                $linkText = __('In Copyright - Non-Commercial Use Permitted');
+                break;
+            case 'http://rightsstatements.org/vocab/InC-RUU/1.0/':
+                $linkText = __('In Copyright - Rights-holder(s) Unlocatable or Unidentifiable');
+                break;
+            case 'http://rightsstatements.org/vocab/NoC-US/1.0/':
+                $linkText = __('No Copyright - United States');
+                break;
+            case 'http://rightsstatements.org/vocab/CNE/1.0/':
+                $linkText = __('Copyright Not Evaluated');
+                break;
+            case 'http://rightsstatements.org/vocab/UND/1.0/':
+                $linkText = __('Copyright Undetermined');
+                break;
+            case 'http://rightsstatements.org/vocab/NKC/1.0/':
+                $linkText = __('No Known Copyright');
+                break;
+            default:
+                $linkText = $href;
+        }
+
+        $html = "<a href='$href' class='$class' target='_blank'>$linkText</a>";
+        return $html;
+    }
+
     protected static function getDefaultDateYear()
     {
         $dateValidator = new DateValidator();
