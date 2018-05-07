@@ -1,6 +1,8 @@
 <?php
 class DigitalArchive
 {
+    const MAX_SUGGESTIONS = 25;
+
     public static function filterRights($item, $elementId, $text)
     {
         $class = 'metadata-rights-link';
@@ -67,6 +69,64 @@ class DigitalArchive
         $year = self::getDefaultDateYear();
         AvantCommon::setPostTextForElementId($elementId, $year);
         return $year;
+    }
+
+    protected static function getQueryForLike($text)
+    {
+        $words = explode(' ', $text);
+        $words = array_map('trim', $words);
+        $query = '';
+        foreach ($words as $word)
+        {
+            if (empty($word))
+            {
+                continue;
+            }
+            if (!empty($query))
+            {
+                $query .= ' AND ';
+            }
+            $query .= "text LIKE '%$word%'";
+        }
+        return $query;
+    }
+
+    protected static function prepareSuggestions($suggestions)
+    {
+        if (count($suggestions) >= self::MAX_SUGGESTIONS)
+        {
+            $suggestions[] = __('[ Type more letters to refine your search ]');
+        }
+        return $suggestions;
+    }
+
+    public static function suggestElementValues($item, $elementId, $text)
+    {
+        $query = self::getQueryForLike($text);
+
+        $db = get_db();
+        $select = $db->select()
+            ->from($db->ElementText, array('DISTINCT(text)'))
+            ->where('element_id = ?', $elementId)
+            ->where($query)
+            ->limit(self::MAX_SUGGESTIONS)
+            ->order('text');
+
+        $results = $db->getTable('ElementText')->fetchObjects($select);
+
+        $suggestions = array();
+        foreach ($results as $result)
+        {
+            $suggestions[] = $result->text;
+        }
+
+        return self::prepareSuggestions($suggestions);
+    }
+
+    public static function suggestTitles($item, $elementId, $text)
+    {
+        $titleElementId = ItemMetadata::getElementIdForElementName('Title');
+        return self::suggestElementValues($item, $titleElementId, $text);
     }
 
     public static function validateTitle($item, $elementId, $text)
