@@ -77,7 +77,7 @@ class Swhpl
         // Make sure the value is an integer.
         if (!ctype_digit($text))
         {
-            AvantElements::addError($item, 'Identifier', 'Value must be a number consisting only of the digits 0 - 9');
+            AvantElements::addError($item, 'Identifier', 'Value must be a number consisting only of the digits 0 - 9.');
             return true;
         }
 
@@ -96,7 +96,6 @@ class Swhpl
                 AvantElements::addError($item, $elementName, "$text is used by another item. Next available Identifier is $nextElementId.");
             }
         }
-        return true;
     }
 
     public static function validateLocation($item, $elementId, $text)
