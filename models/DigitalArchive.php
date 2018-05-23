@@ -113,6 +113,26 @@ class DigitalArchive
         return $year;
     }
 
+    public static function getDefaultIdentifier(Item $item)
+    {
+        return self::getNextIdentifier();
+    }
+
+    public static function getDefaultStatus(Item $item)
+    {
+        return 'OK';
+    }
+
+    protected static function getNextIdentifier()
+    {
+        $identifierElementId = ItemMetadata::getIdentifierElementId();
+        $db = get_db();
+        $sql = "SELECT MAX(CAST(text AS SIGNED)) AS next_element_id FROM `{$db->ElementTexts}` where element_id = $identifierElementId";
+        $result = $db->query($sql)->fetch();
+        $id = $result['next_element_id'] + 1;
+        return $id;
+    }
+
     public static function suggestTitles($item, $elementId, $text)
     {
         $titleElementId = ItemMetadata::getElementIdForElementName('Title');
@@ -120,11 +140,37 @@ class DigitalArchive
         return $elementSuggest->suggestElementValues($titleElementId, $text);
     }
 
+    public static function validateIdentifier($item, $elementId, $text)
+    {
+        // Make sure the value is an integer.
+        if (!ctype_digit($text))
+        {
+            AvantElements::addError($item, 'Identifier', __('Value must be a number consisting only of the digits 0 - 9.'));
+            return;
+        }
+
+        // Search the database to see if another Item has this identifier.
+        $items = get_records('Item', array( 'advanced' => array( array('element_id' => $elementId, 'type' => 'is exactly', 'terms' => $text ))));
+
+        if ($items)
+        {
+            // Found an Item with this identifier. Check if it's the Item being saved or another Item.
+            $savedItem = $item;
+            $foundItem = $items[0];
+            if ($savedItem->id != $foundItem->id)
+            {
+                $nextElementId = self::getNextIdentifier();
+                $elementName = ItemMetadata::getElementNameFromId($elementId);
+                AvantElements::addError($item, $elementName, __('%s is used by another item. Next available Identifier is %s.', $text, $nextElementId));
+            }
+        }
+    }
+
     public static function validateTitle($item, $elementId, $text)
     {
         if (substr($text, 0, 1) == "'")
         {
-            AvantElements::addError($item, 'Title', "A title cannot begin with a single quote. Use a double-quote instead.");
+            AvantElements::addError($item, 'Title', __('A title cannot begin with a single quote. Use a double-quote instead.'));
             return;
         }
 
@@ -148,7 +194,7 @@ class DigitalArchive
                 if ($duplicateIsArticle)
                 {
                     $elementName = ItemMetadata::getElementNameFromId($elementId);
-                    AvantElements::addError($item, $elementName, "Another article exists with the same title as this article.");
+                    AvantElements::addError($item, $elementName, __('Another article exists with the same title as this article.'));
                     return;
                 }
             }
