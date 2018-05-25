@@ -123,7 +123,7 @@ class DigitalArchive
         return 'OK';
     }
 
-    protected static function getNextIdentifier()
+    public static function getNextIdentifier()
     {
         $identifierElementId = ItemMetadata::getIdentifierElementId();
         $db = get_db();
