@@ -13,6 +13,7 @@ class Swhhs
 
         foreach ($references as $reference)
         {
+            // Get the Id, ignoring any text that's in the See Also element.
             $id = intval($reference);
             if ($id == 0)
                 continue;
@@ -26,11 +27,13 @@ class Swhhs
             if (empty($item))
                 continue;
 
+            // Create a related item for the See Also Id.
             $relatedItemId = $item->id;
             $relatedItem = ItemMetadata::getItemFromId($relatedItemId);
             if (empty($relatedItem))
                 continue;
 
+            // Add the related item to the See Also tree node.
             $tree->addKidToRelatedItemsTreeNode($item, $item->id, $label, $treeNode);
         }
 
