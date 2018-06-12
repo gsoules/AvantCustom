@@ -2,50 +2,48 @@
 
 class Swhhs
 {
-    public static function createSeeAlsoRelationshipNodes(Item $item, RelatedItemsTree $tree)
+    public static function createSeeAlsoRelationshipNode(Item $item, RelatedItemsTree $tree)
     {
-        $label = 'See Also';
-        $alsos = ItemMetadata::getElementTextForElementName($item, 'See Also');
+        // Get the text from the See Also element and split it into a list of Ids.
+        $seeAlso = ItemMetadata::getElementTextForElementName($item, 'See Also');
+        $ids = array_map('trim', explode(',', $seeAlso));
+        $items = array();
 
-        $treeNode = new RelatedItemsTreeNode(0, $label);
-
-        $references = array_map('trim', explode(',', $alsos));
-
-        foreach ($references as $reference)
+        foreach ($ids as $id)
         {
-            // Get the Id, ignoring any text that's in the See Also element.
-            $id = intval($reference);
+            // Ignoring any values that are not integers.
+            $id = intval($id);
             if ($id == 0)
                 continue;
 
-            // Get the item from the Finding Aid Id. If that doesn't work, check to see if its an Identifier.
-            $item = self::getItemFromFindingAidId($id);
-            if (empty($item))
-            {
-                $item = ItemMetadata::getItemFromIdentifier($id);
-            }
+            // Get the item from its Id.
+            $item = self::getItemFromId($id);
             if (empty($item))
                 continue;
 
-            // Create a related item for the See Also Id.
-            $relatedItemId = $item->id;
-            $relatedItem = ItemMetadata::getItemFromId($relatedItemId);
-            if (empty($relatedItem))
-                continue;
-
-            // Add the related item to the See Also tree node.
-            $tree->addKidToRelatedItemsTreeNode($item, $item->id, $label, $treeNode);
+            $items[] = $item;
         }
 
-        return array($treeNode);
+        return $tree->createCustomRelationshipsGroup($items, 'See Also');
     }
 
-    protected static function getItemFromFindingAidId($id)
+    protected static function getItemFromId($id)
     {
+        $item = null;
+
+        // Get the item based on its original Finding Aid Id.
         $elementId = ItemMetadata::getElementIdForElementName('Original Id');
         $items = get_records('Item', array('advanced' => array(array('element_id' => $elementId, 'type' => 'is exactly', 'terms' => $id))));
+
         if (empty($items))
-            return null;
-        return $items[0];
+        {
+            // The Finding Aid Id didn't match an item. See if the Id is an Identifier.
+            $item = ItemMetadata::getItemFromIdentifier($id);
+        }
+        else
+        {
+            $item = $items[0];
+        }
+        return $item;
     }
 }
