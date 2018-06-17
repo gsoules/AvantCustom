@@ -166,6 +166,18 @@ class DigitalArchive
         }
     }
 
+    public static function validateItem($item)
+    {
+        $type = AvantCommon::getPostTextForElementName('Type');
+        $isObjectType = substr($type, 0, 6) == 'Object';
+
+        $subjectElementId = ItemMetadata::getElementIdForElementName('Subject');
+        if (!$isObjectType && !AvantCommon::elementHasPostedValue($subjectElementId))
+        {
+            AvantElements::addError($item, 'Subject', __('A Subject is required except for \'Object\' types.'));
+        }
+    }
+
     public static function validateTitle($item, $elementId, $text)
     {
         if (substr($text, 0, 1) == "'")
