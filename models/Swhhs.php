@@ -2,10 +2,10 @@
 
 class Swhhs
 {
-    public static function createSeeAlsoRelationshipNode(Item $item, RelatedItemsTree $tree)
+    public static function createSeeAlsoRelationshipsGroup(Item $primaryItem, RelatedItemsTree $tree)
     {
         // Get the text from the See Also element and split it into a list of Ids.
-        $seeAlso = ItemMetadata::getElementTextForElementName($item, 'See Also');
+        $seeAlso = ItemMetadata::getElementTextForElementName($primaryItem, 'See Also');
         $ids = array_map('trim', explode(',', $seeAlso));
         $items = array();
 
