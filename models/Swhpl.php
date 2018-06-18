@@ -47,14 +47,14 @@ class Swhpl
         }
     }
 
-    public static function validateLocation($item, $elementId, $text)
+    public static function validatePlace($item, $elementId, $text)
     {
-        // Make sure Country has a value if Location has a value.
-        if (!empty(AvantCommon::getPostTextForElementName('Location')))
+        // Make sure Country has a value if Place has a value.
+        if (!empty(AvantCommon::getPostTextForElementName('Place')))
         {
             if (empty(AvantCommon::getPostTextForElementName('Country')))
             {
-                AvantElements::addError($item, 'Country', 'Country must have a value when Location has a value.');
+                AvantElements::addError($item, 'Country', 'Country must have a value when Place has a value.');
             }
         }
     }
