@@ -10,8 +10,6 @@ The AvantCustom plugin provides a way for an administrator/developer to add cust
 without having to create a plugin from scratch. A plugin can provide new functionality, or modify existing functionality,
 in ways that are not possible by modifying a theme.
 
-You can edit avantcustom.css to override styling in the admin theme.
-
 **This plugin is intended for use by developers who are familiar with Omeka plugins and understand how filters and hooks
 are used to add or modify Omeka features.**
 

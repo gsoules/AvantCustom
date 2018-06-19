@@ -2,10 +2,6 @@
 
 class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
 {
-    protected $_hooks = array(
-        'admin_head'
-    );
-
     protected $_filters = array(
         'fallback_image_name',
         'item_citation',
@@ -25,10 +21,5 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
     public function filterItemThumbnailClass($class, $args)
     {
         return AvantCustom::getItemThumbnailClass($class, $args['item']);
-    }
-
-    public function hookAdminHead($args)
-    {
-        queue_css_file('avantcustom');
     }
 }
