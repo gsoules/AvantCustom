@@ -4,8 +4,12 @@ class Swhpl
 {
     public static function filterDate($item, $elementId, $text)
     {
-        $formattedDate = $text;
-        $length = strlen($text);
+        $dateValidator = new DateValidator();
+        list($dateYear, $month, $day, $formatOk) = $dateValidator->parseDate($text);
+        if (!$formatOk)
+        {
+            return $text;
+        }
         if ($length == 10)
         {
             $formattedDate = date("F j, Y", strtotime($text));
@@ -14,7 +18,7 @@ class Swhpl
         {
             $formattedDate = date("F Y", strtotime($text));
         }
-        return $formattedDate;
+        return $text;
     }
 
     public static function validateAccessDB($item, $accessDBValue)

@@ -3,44 +3,48 @@ class DigitalArchive
 {
     const MAX_SUGGESTIONS = 25;
 
-    public static function filterRights($item, $elementId, $text)
+    public static function convertRightsToUrl($text)
     {
-        $class = 'metadata-rights-link';
-        $href = '';
-
         switch ($text)
         {
             case __('In Copyright'):
-                $href = 'http://rightsstatements.org/vocab/InC/1.0/';
+                $url = 'http://rightsstatements.org/vocab/InC/1.0/';
                 break;
             case  __('In Copyright - Educational Use Permitted'):
-                $href = 'http://rightsstatements.org/vocab/InC-EDU/1.0/';
+                $url = 'http://rightsstatements.org/vocab/InC-EDU/1.0/';
                 break;
             case __('In Copyright - Non-Commercial Use Permitted'):
-                $href = 'http://rightsstatements.org/vocab/InC-NC/1.0/';
+                $url = 'http://rightsstatements.org/vocab/InC-NC/1.0/';
                 break;
             case __('In Copyright - Rights-holder(s) Unlocatable or Unidentifiable'):
-                $href = 'http://rightsstatements.org/vocab/InC-RUU/1.0/';
+                $url = 'http://rightsstatements.org/vocab/InC-RUU/1.0/';
                 break;
             case __('No Copyright - United States'):
-                $href = 'http://rightsstatements.org/vocab/NoC-US/1.0/';
+                $url = 'http://rightsstatements.org/vocab/NoC-US/1.0/';
                 break;
             case __('No Copyright - Non-Commercial Use Only'):
-                $href = 'http://rightsstatements.org/page/NoC-NC/1.0/';
+                $url = 'http://rightsstatements.org/page/NoC-NC/1.0/';
                 break;
             case __('Copyright Not Evaluated'):
-                $href = 'http://rightsstatements.org/vocab/CNE/1.0/';
+                $url = 'http://rightsstatements.org/vocab/CNE/1.0/';
                 break;
             case _('Copyright Undetermined'):
-                $href = 'http://rightsstatements.org/vocab/UND/1.0/';
+                $url = 'http://rightsstatements.org/vocab/UND/1.0/';
                 break;
             case __('No Known Copyright'):
-                $href = 'http://rightsstatements.org/vocab/NKC/1.0/';
+                $url = 'http://rightsstatements.org/vocab/NKC/1.0/';
                 break;
             default:
-                $href = 'http://rightsstatements.org/page/1.0';
+                $url = 'http://rightsstatements.org/page/1.0';
         }
 
+        return $url;
+    }
+
+    public static function filterRights($item, $elementId, $text)
+    {
+        $class = 'metadata-rights-link';
+        $href = self::convertRightsToUrl($text);
         $html = "<a href='$href' class='$class' target='_blank'>$text</a>";
         return $html;
     }
