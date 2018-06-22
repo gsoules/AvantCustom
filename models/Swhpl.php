@@ -5,20 +5,25 @@ class Swhpl
     public static function filterDate($item, $elementId, $text)
     {
         $dateValidator = new DateValidator();
-        list($dateYear, $month, $day, $formatOk) = $dateValidator->parseDate($text);
-        if (!$formatOk)
+        list($year, $month, $day, $formatOk) = $dateValidator->parseDate($text);
+
+        $formattedDate = $text;
+
+        if ($formatOk)
         {
-            return $text;
+            // The date is valid, but it might still contain trailing text like 'circa'. Test that the parsed components
+            // can be put back together to match the original text. If not, just return the text as-is.
+            if (strlen($text) == 10 && $text == "$year-$month-$day")
+            {
+                $formattedDate = date("F j, Y", strtotime($text));
+            }
+            else if (strlen($text) == 7 && $text == "$year-$month")
+            {
+                $formattedDate = date("F Y", strtotime($text));
+            }
         }
-        if ($length == 10)
-        {
-            $formattedDate = date("F j, Y", strtotime($text));
-        }
-        elseif ($length == 7)
-        {
-            $formattedDate = date("F Y", strtotime($text));
-        }
-        return $text;
+
+        return $formattedDate;
     }
 
     public static function validateAccessDB($item, $accessDBValue)
