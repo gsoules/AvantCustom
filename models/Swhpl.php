@@ -26,6 +26,19 @@ class Swhpl
         return $formattedDate;
     }
 
+    public static function filterPlace($item, $elementId, $text)
+    {
+        // Remove the "MDI, " prefix from any Place values that have it. See the AvantElements README for the
+        // Implicit Link option to understand why this code must get the implicit link text fro AvantElements.
+        $prefix = 'MDI, ';
+        $link = AvantElements::getImplicitLink($elementId, $text);
+        if (strpos($link, $prefix) !== false)
+        {
+            $link = str_replace($prefix, '', $link);
+        }
+        return $link;
+    }
+
     public static function validateAccessDB($item, $accessDBValue)
     {
         $identifierElementName = ItemMetadata::getIdentifierElementName();
