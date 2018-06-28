@@ -133,11 +133,11 @@ class DigitalArchive
             return;
         }
 
-        // Make sure that this item is not an article with the same title as another article.
+        // Make sure that this item is not an Reference item with the same title as another Reference item.
         $typeValue = AvantCommon::getPostTextForElementName('Type');
-        $isArticle = strpos($typeValue, "Article,") === 0;
+        $isReference = strpos($typeValue, "Reference,") === 0;
 
-        if ($isArticle)
+        if ($isReference)
         {
             // Get all items that have the same title.
             $duplicateItems = get_records('Item', array( 'advanced' => array( array('element_id' => $elementId, 'type' => 'is exactly', 'terms' => $text ))));
@@ -149,11 +149,11 @@ class DigitalArchive
                     continue;
                 }
                 $duplicateType = ItemMetadata::getElementTextForElementName($duplicateItem, 'Type');
-                $duplicateIsArticle = strpos($duplicateType, "Article,") === 0;
-                if ($duplicateIsArticle)
+                $duplicateIsReference = strpos($duplicateType, "Reference,") === 0;
+                if ($duplicateIsReference)
                 {
                     $elementName = ItemMetadata::getElementNameFromId($elementId);
-                    AvantElements::addError($item, $elementName, __('Another article exists with the same title as this article.'));
+                    AvantElements::addError($item, $elementName, __('Another Reference item exists with the same title as this Reference item.'));
                     return;
                 }
             }

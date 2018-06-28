@@ -13,10 +13,10 @@ class AvantCustom
         $typeParts = explode(',', $itemType);
         $baseType = strtolower(trim($typeParts[0]));
 
-        // Use the subject only with articles, otherwise there are too many possible file names.
-        // This should suffice since most placeholders are for articles.
+        // Use the subject only with Reference items, otherwise there are too many possible file names.
+        // This should suffice since most placeholders are for Reference items.
         $baseSubject = '';
-        if ($baseType == 'article')
+        if ($baseType == 'reference')
         {
             $itemSubject = ItemMetadata::getElementTextForElementName($item, 'Subject');
             $subjectParts = explode(',', $itemSubject);
