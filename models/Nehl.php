@@ -3,6 +3,9 @@ class Nehl
 {
     public static function requiredUnlessReferenceType($item, $elementId, $text)
     {
+        // Make the Object ID and Location elements required except when the item Type is Reference.
+        // This is to deal with the fact that Reference items have no physical location and don't need an Object ID.
+
         $typeValue = AvantCommon::getPostTextForElementName('Type');
         if ($typeValue == 'Reference')
         {
