@@ -159,4 +159,22 @@ class DigitalArchive
             }
         }
     }
+    
+    public static function validateUniqueValue($item, $elementId, $text)
+    {
+        // Search the database to see if another Item has this element's value.
+        $items = get_records('Item', array( 'advanced' => array( array('element_id' => $elementId, 'type' => 'is exactly', 'terms' => $text ))));
+
+        if ($items)
+        {
+            // Found an Item with this identifier. Check if it's the Item being saved or another Item.
+            $savedItem = $item;
+            $foundItem = $items[0];
+            if ($savedItem->id != $foundItem->id)
+            {
+                $elementName = ItemMetadata::getElementNameFromId($elementId);
+                AvantElements::addError($item, $elementName, __('%s is used by another item.', $text));
+            }
+        }
+    }
 }
