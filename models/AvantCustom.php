@@ -39,14 +39,13 @@ class AvantCustom
         return $citation;
     }
 
-    public static function getItemThumbnailClass($class, $item)
+    public static function getItemThumbnailClass($class, $itemType)
     {
-        // Append the item's base type to it's thumbnail class. For example, if the base type
+        // Append the item's base type to its thumbnail class. For example, if the base type
         // is 'Document, Diary' it appends 'Document'. The type portion of the class is used to
         // provide styling for the item preview thumbnail, e.g. a colored line above the image.
 
-        $itemType = ItemMetadata::getElementTextForElementName($item, 'Type');
-        if ($itemType)
+        if (!empty($itemType))
         {
             // Get the base type and use it for this item's class.
             $parts = explode(',', $itemType);

@@ -20,6 +20,6 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
 
     public function filterItemThumbnailClass($class, $args)
     {
-        return AvantCustom::getItemThumbnailClass($class, $args['item']);
+        return AvantCustom::getItemThumbnailClass($class, $args['itemType']);
     }
 }
