@@ -10,7 +10,7 @@ class AvantCustomPlugin extends Omeka_Plugin_AbstractPlugin
 
     public function filterFallbackImageName($name, $args)
     {
-        return AvantCustom::getFallbackImageName($name, $args['item']);
+        return AvantCustom::getFallbackImageName($name, $args['typeName'], $args['subject']);
     }
 
     public function filterItemCitation($citation, $args)

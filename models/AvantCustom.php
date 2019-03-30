@@ -2,15 +2,14 @@
 
 class AvantCustom
 {
-    public static function getFallbackImageName($name, $item)
+    public static function getFallbackImageName($name, $typeName, $subject)
     {
         // Construct a file name from the item's base type and base subject.
 
-        $itemType = ItemMetadata::getElementTextForElementName($item, 'Type');
-        if (empty($itemType))
+        if (empty($typeName))
             return $name;
 
-        $typeParts = explode(',', $itemType);
+        $typeParts = explode(',', $typeName);
         $baseType = strtolower(trim($typeParts[0]));
 
         // Use the subject only with Reference items, otherwise there are too many possible file names.
@@ -18,8 +17,7 @@ class AvantCustom
         $baseSubject = '';
         if ($baseType == 'reference')
         {
-            $itemSubject = ItemMetadata::getElementTextForElementName($item, 'Subject');
-            $subjectParts = explode(',', $itemSubject);
+            $subjectParts = explode(',', $subject);
             $baseSubject = strtolower(trim($subjectParts[0]));
             if (!empty($baseSubject))
                 $baseSubject = '-' . $baseSubject;
