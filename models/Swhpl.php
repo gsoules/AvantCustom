@@ -26,18 +26,6 @@ class Swhpl
         return $formattedDate;
     }
 
-    public static function filterDropbox($item, $elementId, $text)
-    {
-        if (AvantCommon::userIsAdmin())
-        {
-            $id = intval($text);
-            $folder = $id - ($id % 1000);
-            $dropboxFolder = "&nbsp;&nbsp;<a href='https://www.dropbox.com/home/SWHPL%20Digital%20Archive/Database/$folder/$text' class='dropbox-link' target='_blank'></a>";
-            $text = $text . $dropboxFolder;
-        }
-        return $text;
-    }
-
     public static function filterPlace($item, $elementId, $text)
     {
         // Remove the "MDI, " prefix from any Place values that have it. See the AvantElements README for the
