@@ -41,23 +41,13 @@ class DigitalArchive
         return $url;
     }
 
-    public static function filterIdentifierS3($item, $elementId, $text)
+    public static function filterIdentifierS3($item, $elementId, $identifier)
     {
-        if (!plugin_is_active('AvantS3'))
-            return $text;
+        if (!plugin_is_active('AvantS3') || !AvantCommon::userIsAdmin())
+            return $identifier;
 
-        if (AvantCommon::userIsAdmin())
-        {
-            $bucket = S3Config::getOptionValueForBucket();
-            $console = S3Config::getOptionValueForConsole();
-            $path = S3Config::getOptionValueForPath();
-            $region = S3Config::getOptionValueForRegion();
-            $id = intval($text);
-            $folder = $id - ($id % 1000);
-            $s3Folder = "&nbsp;&nbsp;<a href='$console/$bucket/$path/$folder/$text/?region=$region&tab=overview' class='cloud-storage-link' target='_blank'></a>";
-            $text = $text . $s3Folder;
-        }
-        return $text;
+        $s3Link = AvantAdmin::emitS3Link($identifier);
+        return "$identifier&nbsp;&nbsp;$s3Link";
     }
 
     public static function filterRights($item, $elementId, $text)
