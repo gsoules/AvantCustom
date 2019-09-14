@@ -43,6 +43,9 @@ class DigitalArchive
 
     public static function filterIdentifierS3($item, $elementId, $identifier)
     {
+        if ($item->public == 0)
+            $identifier = '* ' . $identifier;
+
         if (!plugin_is_active('AvantS3') || !AvantCommon::userIsAdmin())
             return $identifier;
 
