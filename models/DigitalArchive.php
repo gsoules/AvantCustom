@@ -43,14 +43,19 @@ class DigitalArchive
 
     public static function filterIdentifierS3($item, $elementId, $identifier)
     {
+        if (!AvantCommon::userIsAdmin())
+            return $identifier;
+
+        if (plugin_is_active('AvantS3'))
+        {
+            $s3Link = AvantAdmin::emitS3Link($identifier);
+            $identifier = "$identifier&nbsp;&nbsp;$s3Link";
+        }
+
         if ($item->public == 0)
             $identifier = '* ' . $identifier;
 
-        if (!plugin_is_active('AvantS3') || !AvantCommon::userIsAdmin())
-            return $identifier;
-
-        $s3Link = AvantAdmin::emitS3Link($identifier);
-        return "$identifier&nbsp;&nbsp;$s3Link";
+        return $identifier;
     }
 
     public static function filterRights($item, $elementId, $text)
