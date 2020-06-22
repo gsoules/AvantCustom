@@ -4,26 +4,7 @@ class Swhpl
 {
     public static function filterDate($item, $elementId, $text)
     {
-        $dateValidator = new DateValidator();
-        list($year, $month, $day, $formatOk) = $dateValidator->parseDate($text);
-
-        $formattedDate = $text;
-
-        if ($formatOk)
-        {
-            // The date is valid, but it might still contain trailing text like 'circa'. Test that the parsed components
-            // can be put back together to match the original text. If not, just return the text as-is.
-            if (strlen($text) == 10 && $text == "$year-$month-$day")
-            {
-                $formattedDate = date("F j, Y", strtotime($text));
-            }
-            else if (strlen($text) == 7 && $text == "$year-$month")
-            {
-                $formattedDate = date("F Y", strtotime($text));
-            }
-        }
-
-        return $formattedDate;
+        return DigitalArchive::filterDate($item, $elementId, $text);
     }
 
     public static function filterPlace($item, $elementId, $text)

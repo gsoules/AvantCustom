@@ -41,6 +41,31 @@ class DigitalArchive
         return $url;
     }
 
+    public static function filterDate($item, $elementId, $text)
+    {
+        $dateValidator = new DateValidator();
+        list($year, $month, $day, $formatOk) = $dateValidator->parseDate($text);
+
+        $formattedDate = $text;
+
+        if ($formatOk)
+        {
+            // The date is valid, but it might still contain trailing text like 'circa'. Test that the parsed components
+            // can be put back together to match the original text. If not, just return the text as-is. Otherwise,
+            // return the date pretty-printed e.g. change "1923-06-03" to "June 3, 1923".
+            if (strlen($text) == 10 && $text == "$year-$month-$day")
+            {
+                $formattedDate = date("F j, Y", strtotime($text));
+            }
+            else if (strlen($text) == 7 && $text == "$year-$month")
+            {
+                $formattedDate = date("F Y", strtotime($text));
+            }
+        }
+
+        return $formattedDate;
+    }
+
     public static function filterIdentifierS3($item, $elementId, $identifier)
     {
         if (!AvantCommon::userIsAdmin())
