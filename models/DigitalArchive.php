@@ -73,7 +73,7 @@ class DigitalArchive
 
         if (plugin_is_active('AvantS3'))
         {
-            $s3Link = AvantAdmin::emitS3Link($identifier);
+            $s3Link = AvantCommon::emitS3Link($identifier);
             $identifier = "$identifier&nbsp;&nbsp;$s3Link";
         }
 
