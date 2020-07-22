@@ -16,31 +16,6 @@ class Swhpl
         return $link;
     }
 
-    public static function requiredUnlessMetadataType($item, $elementId, $text)
-    {
-        // Make the Subject and Rights elements required except when the item Type is Metadata.
-        // This is to deal with the fact that Metadata items have no subject and are not public.
-
-        $typeValue = AvantCommon::getPostTextForElementName('Type');
-        if ($typeValue == 'Metadata')
-        {
-            return;
-        }
-
-        $subjectValue = AvantCommon::getPostTextForElementName('Subject');
-        $rightsValue = AvantCommon::getPostTextForElementName('Rights');
-
-        if (strlen($subjectValue) == 0)
-        {
-            AvantElements::addError($item, 'Subject', 'A value is required except when the item Type is Metadata.');
-        }
-
-        if (strlen($rightsValue) == 0)
-        {
-            AvantElements::addError($item, 'Rights', 'A value is required except when the item Type is Metadata.');
-        }
-    }
-
     public static function validateAccessDB($item, $accessDBValue)
     {
         $identifierElementName = ItemMetadata::getIdentifierElementName();
