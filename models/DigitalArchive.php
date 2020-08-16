@@ -159,12 +159,21 @@ class DigitalArchive
     {
         $type = AvantCommon::getPostTextForElementName('Type');
         $isObjectType = substr($type, 0, 6) == 'Object';
+        if ($isObjectType)
+        {
+            // Don't require a Subject when the type is object.
+            return;
+        }
 
         $subjectElementId = ItemMetadata::getElementIdForElementName('Subject');
-        if (!$isObjectType && !AvantCommon::elementHasPostedValue($subjectElementId))
+        if (AvantCommon::elementHasPostedValue($subjectElementId))
         {
-            AvantElements::addError($item, 'Subject', __('A Subject is required except for \'Object\' types.'));
+            // There is a Subject -- item is valid.
+            return;
         }
+
+        // The item type is not Object and there is no subject.
+        AvantElements::addError($item, 'Subject', __('A Subject is required except for \'Object\' types or when Subject is \'none\'.'));
     }
 
     public static function validateTitle($item, $elementId, $text)
