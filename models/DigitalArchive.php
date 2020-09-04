@@ -109,17 +109,7 @@ class DigitalArchive
 
     public static function getDefaultIdentifier(Item $item)
     {
-        return self::getNextIdentifier();
-    }
-
-    public static function getNextIdentifier()
-    {
-        $identifierElementId = ItemMetadata::getIdentifierElementId();
-        $db = get_db();
-        $sql = "SELECT MAX(CAST(text AS SIGNED)) AS next_element_id FROM `{$db->ElementTexts}` where element_id = $identifierElementId";
-        $result = $db->query($sql)->fetch();
-        $id = $result['next_element_id'] + 1;
-        return $id;
+        return AvantCommon::getNextIdentifier();
     }
 
     public static function suggestTitles($item, $elementId, $text)
@@ -148,7 +138,7 @@ class DigitalArchive
             $foundItem = $items[0];
             if ($savedItem->id != $foundItem->id)
             {
-                $nextElementId = self::getNextIdentifier();
+                $nextElementId = AvantCommon::getNextIdentifier();
                 $elementName = ItemMetadata::getElementNameFromId($elementId);
                 AvantElements::addError($item, $elementName, __('%s is used by another item. Next available Identifier is %s.', $text, $nextElementId));
             }
