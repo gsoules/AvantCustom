@@ -1,28 +1,10 @@
 # AvantCustom (plugin for Omeka Classic)
 
-The AvantCustom plugin provides a way for an administrator/developer to add custom logic to their Omeka installation
-without having to create a plugin from scratch. A plugin can provide new functionality, or modify existing functionality,
-in ways that are not possible by modifying a theme.
-
-**This plugin is intended for use by developers who are familiar with Omeka plugins and understand how filters and hooks
-are used to add or modify Omeka features.**
-
-
-## Dependencies
-The AvantCustom plugin requires that the [AvantCommon](https://github.com/gsoules/AvantCommon) plugin be installed and activated.
-
-## Installation
-
-To install the AvantCustom plugin, follow these steps:
-
-1. First install and activate the [AvantCommon](https://github.com/gsoules/AvantCommon) plugin.
-1. Unzip the AvantCustom-master file into your Omeka installation's plugin directory.
-1. Rename the folder to AvantCustom.
-1. Activate the plugin from the Admin → Settings → Plugins page.
+Documentation for this plugin is located at <https://digitalarchive.us/docs/plugins/avantcustom>. 
 
 ## Warning
 
-Use it at your own risk.
+Use this software at your own risk.
 
 ##  License
 
@@ -45,6 +27,5 @@ this program; if not, write to the Free Software Foundation, Inc.,
 Copyright
 ---------
 
-* Created by [gsoules](https://github.com/gsoules)
-* Copyright George Soules, 2016-2018.
-* See [LICENSE](https://github.com/gsoules/AvantCustom/blob/master/LICENSE) for more information.
+* Created by [gsoules](https://github.com/gsoules) 
+* Copyright George Soules, 2016-2022.
