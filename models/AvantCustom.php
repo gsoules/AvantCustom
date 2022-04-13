@@ -22,6 +22,10 @@ class AvantCustom
             if (!empty($baseSubject))
                 $baseSubject = '-' . $baseSubject;
         }
+        else if (strpos(strtolower($typeName), 'audio') !== false)
+        {
+            $baseType = "sound";
+        }
 
         $name = "fallback-{$baseType}{$baseSubject}.png";
         return $name;
