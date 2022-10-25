@@ -41,6 +41,16 @@ class DigitalArchive
         return $url;
     }
 
+    public static function filterAccession($item, $elementId, $accession)
+    {
+        if (plugin_is_active('AvantS3'))
+        {
+            $s3Link = AvantCommon::emitS3LinkForAccession($accession);
+            $accession = "$accession&nbsp;&nbsp;$s3Link";
+        }
+        return $accession;
+    }
+
     public static function filterDate($item, $elementId, $text)
     {
         $dateValidator = new DateValidator();
@@ -73,7 +83,7 @@ class DigitalArchive
 
         if (plugin_is_active('AvantS3'))
         {
-            $s3Link = AvantCommon::emitS3Link($identifier);
+            $s3Link = AvantCommon::emitS3LinkForItem($identifier);
             $identifier = "$identifier&nbsp;&nbsp;$s3Link";
         }
 
