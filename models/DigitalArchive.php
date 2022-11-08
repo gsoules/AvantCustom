@@ -43,10 +43,14 @@ class DigitalArchive
 
     public static function filterAccession($item, $elementId, $accession)
     {
+        $link = AvantElements::getImplicitLink($elementId, $accession);
+
         if (plugin_is_active('AvantS3'))
         {
+            $link = str_replace("<div>", "", $link);
+            $link = str_replace("</div>", "", $link);
             $s3Link = AvantCommon::emitS3LinkForAccession($accession);
-            $accession = "$accession&nbsp;&nbsp;$s3Link";
+            $accession = "$link&nbsp;&nbsp;$s3Link";
         }
         return $accession;
     }
