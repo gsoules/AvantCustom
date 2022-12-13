@@ -45,14 +45,14 @@ class DigitalArchive
     {
         $link = AvantElements::getImplicitLink($elementId, $accession);
 
-        if (plugin_is_active('AvantS3'))
+        if (plugin_is_active('AvantS3') && AvantCommon::userIsAdmin())
         {
             $link = str_replace("<div>", "", $link);
             $link = str_replace("</div>", "", $link);
             $s3Link = AvantCommon::emitS3LinkForAccession($accession);
-            $accession = "$link&nbsp;&nbsp;$s3Link";
+            $link = "$link&nbsp;&nbsp;$s3Link";
         }
-        return $accession;
+        return $link;
     }
 
     public static function filterDate($item, $elementId, $text)
