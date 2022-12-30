@@ -88,7 +88,8 @@ class DigitalArchive
         if (plugin_is_active('AvantS3'))
         {
             $s3Link = AvantCommon::emitS3LinkForItem($identifier);
-            $identifier = "$identifier&nbsp;&nbsp;$s3Link";
+            if ($s3Link)
+                $identifier = "$identifier&nbsp;&nbsp;$s3Link";
         }
 
         if ($item->public == 0)
