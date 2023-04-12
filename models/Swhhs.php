@@ -6,6 +6,8 @@ class Swhhs
     {
         // Get the text from the See Also element and split it into a list of Ids.
         $seeAlso = ItemMetadata::getElementTextForElementName($primaryItem, 'See Also');
+        if ($seeAlso === null)
+            $seeAlso = '';
         $ids = array_map('trim', explode(',', $seeAlso));
         $items = array();
 
