@@ -9,12 +9,19 @@ class Hrifne
         $html = "";
         foreach ($places as $place)
         {
-            $placeId = preg_replace( '/[\W]/', '', strtolower($place));
-            $href = "https://hrifne.avantlogic.net/digitalatlas/timeline-place.php?id=$placeId";
+            $place_parts = explode(":", $place);
+            $placeId = $place_parts[0];
+            $placeName = $place_parts[1];
+
+            $local = true;
+            if ($local)
+                $href = "http://localhost/hrifne/timeline-place.php?id=$placeId";
+            else
+                $href = "https://hrifne.avantlogic.net/digitalatlas/timeline-place.php?id=$placeId";
 
             if ($html)
                 $html .= "<br/>";
-            $html .= "<a href='$href' target='_blank'>$place</a>";
+            $html .= "<a href='$href' target='_blank'>$placeName</a>";
         }
         return $html;
     }
