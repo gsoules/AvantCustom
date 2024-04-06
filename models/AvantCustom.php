@@ -15,7 +15,7 @@ class AvantCustom
         // Use the subject only with Reference items, otherwise there are too many possible file names.
         // This should suffice since most placeholders are for Reference items.
         $baseSubject = '';
-        if ($baseType == 'reference')
+        if ($subject && $baseType == 'reference')
         {
             $subjectParts = explode(',', $subject);
             $baseSubject = strtolower(trim($subjectParts[0]));
