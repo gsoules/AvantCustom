@@ -9,11 +9,11 @@ class Hrifne
         $html = "";
         foreach ($places as $place)
         {
-            $place_parts = explode(":", $place);
-            $placeId = $place_parts[0];
-            $placeName = $place_parts[1];
+            $place_parts = explode(" : ", $place);
+            $placeName = $place_parts[0];
+            $placeId = $place_parts[1];
 
-            $local = true;
+            $local = false;
             if ($local)
                 $href = "http://localhost/hrifne/timeline-place.php?id=$placeId";
             else
