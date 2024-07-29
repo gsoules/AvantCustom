@@ -11,7 +11,7 @@ class Hrifne
         {
             $place_parts = explode(" : ", $place);
             $placeName = $place_parts[0];
-            $placeId = $place_parts[1];
+            $placeId = count($place_parts) == 2 ? $place_parts[1] : 0;
 
             $local = false;
             if ($local)
