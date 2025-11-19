@@ -28,7 +28,7 @@ class DigitalArchive
             case __('Copyright Not Evaluated'):
                 $url = 'http://rightsstatements.org/vocab/CNE/1.0/';
                 break;
-            case _('Copyright Undetermined'):
+            case __('Copyright Undetermined'):
                 $url = 'http://rightsstatements.org/vocab/UND/1.0/';
                 break;
             case __('No Known Copyright'):
